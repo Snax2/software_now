@@ -1,1 +1,42 @@
-e
+import time
+from PIL import Image
+
+# Generate a random number (n)
+current_time = int(time.time())
+generated_number = (current_time % 100) + 50
+if generated_number % 2 == 0:
+    generated_number += 10
+print(generated_number)
+
+# path to image
+image_path = '/Users/margojoseph-kuo/Desktop/chapter1.jpg'
+
+# Load image
+original_image = Image.open(image_path)
+
+# Create a new image with the same size and mode
+new_image = Image.new('RGB', original_image.size)
+
+# Iterate over each pixel in the original image
+for x in range(original_image.width):
+    for y in range(original_image.height):
+        # Get the original pixel values
+        r, g, b = original_image.getpixel((x, y))
+
+        # Update pixel values by adding the generated number
+        new_r = r + generated_number
+        new_g = g + generated_number
+        new_b = b + generated_number
+
+        # Set the updated pixel values in the new image
+        new_image.putpixel((x, y), (new_r, new_g, new_b))
+
+# Save the new image
+new_image.save('/Users/margojoseph-kuo/Desktop/chapter1out.png')
+
+# Calculate the sum of red pixel values in the new image
+red_pixel_sum = sum([new_image.getpixel((x, y))[0] for x in range(new_image.width) for y in range(new_image.height)])
+
+# Print the sum for moving to the next chapter
+print("Sum of red pixel values:", red_pixel_sum)
+
