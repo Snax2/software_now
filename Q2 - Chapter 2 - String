@@ -1,0 +1,42 @@
+some_str = "56aAWw1984sktr235270aYmn145ss785fsq31D0"
+
+letters=""
+numbers=""
+res=[]
+for i in some_str:
+	if(i.isdigit()):
+		numbers+=i
+	else:
+		letters+=i
+res.append(letters)
+res.append(numbers)
+
+print('The letters in the string are', letters)
+print('The numbers in the string are', numbers)
+
+
+upper=""
+for i in letters:
+	if(i.isupper()):
+		upper+=i
+   
+res.append(upper)
+
+print('The upper-case letters in the string are', upper)
+
+ascii_upper=[ord(ch) for ch in upper]
+print('The ASCII CODE of the upper-case letters are', ascii_upper)
+
+
+
+even=""
+for i in numbers:
+    if(int(i) % 2 ==0):
+        even+=i
+
+res.append(even)
+
+print('The even numbers in the string are', even)
+
+ascii_even=[ord(ch) for ch in even]
+print('The ASCII CODE of the even numbers are', ascii_even)
