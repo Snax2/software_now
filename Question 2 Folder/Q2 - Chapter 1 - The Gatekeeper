@@ -1,18 +1,25 @@
+import os
 import time
+import requests
 from PIL import Image
+from io import BytesIO
 
-# Generate a random number (n)
+# Generate a number (n)
 current_time = int(time.time())
 generated_number = (current_time % 100) + 50
 if generated_number % 2 == 0:
     generated_number += 10
 print(generated_number)
 
-# path to image
-image_path = '/Users/margojoseph-kuo/Desktop/chapter1.jpg'
+# Updated direct download link of the image from Google Drive
+image_url = 'https://drive.google.com/uc?export=download&id=1V66TUr45RSOYQevYx1NM0bmXmAGvy5gc'
 
-# Load image
-original_image = Image.open(image_path)
+# Download the image from the web
+response = requests.get(image_url)
+image_data = BytesIO(response.content)
+
+# Load the original image from the downloaded data
+original_image = Image.open(image_data)
 
 # Create a new image with the same size and mode
 new_image = Image.new('RGB', original_image.size)
@@ -31,12 +38,14 @@ for x in range(original_image.width):
         # Set the updated pixel values in the new image
         new_image.putpixel((x, y), (new_r, new_g, new_b))
 
-# Save the new image
-new_image.save('/Users/margojoseph-kuo/Desktop/chapter1out.png')
+# Get the path to the Downloads folder
+downloads_path = os.path.join(os.path.expanduser("~"), "Downloads")
+
+# Save the new image in the Downloads folder
+new_image.save(os.path.join(downloads_path, 'chapter1out2.png'))
 
 # Calculate the sum of red pixel values in the new image
 red_pixel_sum = sum([new_image.getpixel((x, y))[0] for x in range(new_image.width) for y in range(new_image.height)])
 
 # Print the sum for moving to the next chapter
 print("Sum of red pixel values:", red_pixel_sum)
-
